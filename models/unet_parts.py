@@ -48,7 +48,7 @@ class down(nn.Module):
 
 
 class up(nn.Module):
-    def __init__(self, in_ch, out_ch, bilinear=True, norm_layer=SyncBatchNorm):
+    def __init__(self, in_ch, out_ch, bilinear=False, norm_layer=SyncBatchNorm):
         super(up, self).__init__()
 
         #  would be a nice idea if the upsampling could be learned too,
@@ -56,7 +56,7 @@ class up(nn.Module):
         if bilinear:
             self.up = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
         else:
-            self.up = nn.ConvTranspose2d(in_ch//2, in_ch//2, 2, stride=2)
+            self.up = nn.ConvTranspose2d(in_ch, in_ch // 2, 2, stride=2)
 
         self.conv = double_conv(in_ch, out_ch, norm_layer=norm_layer)
 

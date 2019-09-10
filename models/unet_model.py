@@ -12,10 +12,10 @@ class UNet(nn.Module):
         super(UNet, self).__init__()
         if backbone == 'seresnext50':
             self.backbone = se_resnext50_32x4d(norm_layer=SyncBatchNorm)
-        self.up1 = up(3072, 768, norm_layer=norm_layer)
-        self.up2 = up(1280, 320, norm_layer=norm_layer)
-        self.up3 = up(576, 144, norm_layer=norm_layer)
-        self.up4 = up(208, 64, norm_layer=norm_layer)
+        self.up1 = up(2048, 1024, norm_layer=norm_layer)
+        self.up2 = up(1024, 512, norm_layer=norm_layer)
+        self.up3 = up(512, 128, norm_layer=norm_layer)
+        self.up4 = up(128, 64, norm_layer=norm_layer)
         self.outc = outconv(64, n_classes)
 
     def forward(self, x):
